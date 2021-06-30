@@ -3,11 +3,6 @@ library(ggplot2)
 library(corrplot)
 library(modelr)
 rethink = read_csv("rethink.csv") #read the database
-speed = read_csv("19842021_guzzled.csv") #read the database
-
-speed = speed %>% filter(hpv > 0)
-
-View (speed)
 
 rethink = rethink %>% filter(Displ < 70 & MPG <100) #let's tide it up
 
