@@ -1,5 +1,5 @@
-# fuel_consumption
-Car's fuel consumption... What to blame?
+# Fuel Consumption
+Car's fuel consumption and pollution... What to blame?
 
 Download and check out this project with RStudio...
 
