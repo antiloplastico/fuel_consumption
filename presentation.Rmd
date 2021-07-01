@@ -2,7 +2,6 @@
 title: "What to blame?"
 author: "Robazza Alberto"
 output:
-  ##ioslides_presentation:
   revealjs::revealjs_presentation:
     transition: zoom
     theme: sky
