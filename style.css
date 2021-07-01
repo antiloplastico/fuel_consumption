@@ -1,0 +1,11 @@
+slides > slide:not(.nobackground):after {
+	content: ""
+}
+
+h1, h2 {
+	color: darkseagreen;
+}
+
+li {
+	font-style: italic;
+}

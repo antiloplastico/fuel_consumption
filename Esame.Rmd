@@ -1,7 +1,9 @@
 ---
 title: "What to blame?"
 author: "Robazza Alberto"
-output: ioslides_presentation
+output:
+  ioslides_presentation:
+    css: style.css
 ---
 
 ```{r setup, include=FALSE}
@@ -17,7 +19,7 @@ rethink = read_csv("rethink.csv") #read the database
 
 Everyone can dream about an ideal cars that perfectly match his needs.
 
-## But..
+## But...
 
 Since the environment needs to be preserved, what should limit governments and manufacturers?  
   
