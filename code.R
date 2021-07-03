@@ -36,37 +36,36 @@ ggplot((rethink %>% filter(Displ > 0.1 & Cylinders > 0 & Fuel == "Tier 2 Cert Ga
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE) #Turbo only, function is initially logarithmic and after exponential (but just one)
 
-ggplot((rethink %>% filter (Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline")), aes(x = HP, y = Lb100)) +
-  geom_point(alpha = 0.2) +
-  geom_smooth(se=FALSE)+
-  ylim(0, 0.1)
-
-ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline")), aes(x = Displ, y = Lb100)) +
+ggplot((rethink %>% filter (Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline"& Test == "FTP")), aes(x = HP, y = Lb100)) +
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE)
 
-ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline")), aes(x = Weight, y = Lb100)) +
+ggplot((rethink %>% filter(Cylinders > 0 & Lb100 > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = jitter(Cylinders), y = Lb100)) +
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE)
 
-ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline")), aes(x = Gears, y = Lb100)) +
+ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = Weight, y = Lb100)) +
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE)
 
-cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$Cylinders,
-    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$Lb100)
+ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = Gears, y = Lb100)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(se=FALSE)
+
+cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Cylinders,
+    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
 
 cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$Displ,
     (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$Lb100)
 
-cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$HP,
-    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$Lb100)
+cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$HP,
+    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
 
-cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$Weight,
-    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$Lb100)
+cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Weight,
+    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
 
-cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$Gears,
-    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$Lb100)
+cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Gears,
+    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
 
 ######################TESTS#####################
 
@@ -75,7 +74,6 @@ cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline"))$Gears,
 ggplot((rethink %>% filter(Displ < 70 & Displ > 0.1 & Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & HP/Displ < 120)), aes(x = Displ*Cylinders, y = HP)) +
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE)
-
 
 ggplot((rethink %>% filter(Displ < 70 & Displ > 0.1)), aes(x = HP, y = Displ)) +
   geom_point(alpha = 0.2) +

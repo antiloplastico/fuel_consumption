@@ -17,6 +17,9 @@ library(ggplot2)
 library(corrplot)
 library(modelr)
 rethink = read_csv("rethink.csv") #read the database
+rethink = rethink %>% filter(Displ < 70 & MPG <100) #let's tide it up
+rethink = rethink %>% mutate(KML = MPG*0.425144, CO2bK = CO2*0.621371, Lb100 = 100/KML) # add CO2 grams per kilometer and liters used by 100km
+
 ```
 
 ## Car pollution... What to blame?
@@ -35,23 +38,38 @@ We will split cars in some big groups:
   
 Let's do some hypothesis with interesting data...
 
-## Correlation between CO2 and liters by 100K
+## Correlation between CO2 and liters by 100Km
 ![Interestig correlation because we can almost equiparate the two variables](CO2km.png){height=450px}
 ```{r pressure}
-cor(1/(rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$MPG, (rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$CO2)
+cor((rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$CO2bK, (rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$Lb100)
 ```
-## Weight
+## Cylinders
 
-- Sports cars: heaviest mass at the bottom  
-- Off road vehicles: total weight lowest as possible
+- Sport cars and long-distance cars: not too little in order to reduce vibration  
+![](Cylinders.png)
+```{r cylinders}
+cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Cylinders,
+    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
+```
 
 ## Horsepower
 
 - Sport cars: needed to reach higher speed and better acceleration  
+![](HP.png)  
+```{r hp}
+cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$HP,
+    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
+```
 
-## Cylinders
+## Weight
 
-- Sport cars and long-distance cars: not too little in order to reduce vibration
+- Sports cars: heaviest mass at the bottom  
+- Off road vehicles: total weight lowest as possible
+![](weight.png) 
+```{r weight}
+cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Weight,
+    (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
+```
 
 ## Gears and air drag coefficient
 
