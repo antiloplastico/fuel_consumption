@@ -40,7 +40,7 @@ ggplot((rethink %>% filter (Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline"& Test =
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE)
 
-ggplot((rethink %>% filter(Cylinders > 0 & Lb100 > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = jitter(Cylinders), y = Lb100)) +
+ggplot((rethink %>% filter(Cylinders > 0 & Lb100 > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = Cylinders, y = Lb100)) +
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE)
 

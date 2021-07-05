@@ -38,7 +38,7 @@ We will split cars in some big groups:
   
 Let's do some hypothesis with interesting data...
 
-## Correlation between CO2 and liters by 100Km
+## Correlation between CO2 by Km and liters by 100 Km
 ![Interestig correlation because we can almost equiparate the two variables](CO2km.png){height=450px}
 ```{r pressure}
 cor((rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$CO2bK, (rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$Lb100)
@@ -46,7 +46,7 @@ cor((rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$CO
 ## Cylinders
 
 - Sport cars and long-distance cars: not too little in order to reduce vibration  
-![](Cylinders.png)
+![](Cylinders.png){height=400px}  
 ```{r cylinders}
 cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Cylinders,
     (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
@@ -55,7 +55,7 @@ cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test ==
 ## Horsepower
 
 - Sport cars: needed to reach higher speed and better acceleration  
-![](HP.png)  
+![](HP.png){height=400px}  
 ```{r hp}
 cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$HP,
     (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
@@ -65,18 +65,18 @@ cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test ==
 
 - Sports cars: heaviest mass at the bottom  
 - Off road vehicles: total weight lowest as possible
-![](weight.png) 
+![](weight.png){height=400px}  
 ```{r weight}
 cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Weight,
     (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
 ```
-
 ## Gears and air drag coefficient
 
 ![As we can see, the power needed to go faster become higher as the speed increase](cd.png)  
-We can also increase the maximum speed by reducing the acceleration adjusting gears ratio.  
+We can also increase the maximum speed by reducing the acceleration adjusting gears ratio.   
 
->  - Sport cars: maximize the maximum speed  
+>  - Long distance cars: reduced air drag coefficient can increase liters by 100 Km keeping th same maximum speed  
+- Sport cars: reduced air drag coefficient can increase maximum speed  
 - City cars: acceleration over maximum speed  
 - Off-road cars: maximize acceleration (reduced gears)
 
@@ -85,6 +85,11 @@ We can also increase the maximum speed by reducing the acceleration adjusting ge
 Everyone would decrease emissions, we have to keep in mind different type of cars meets different needs and have different aims.
 
 ## Bibliography
+- [Data source (epa.gov)](https://www.epa.gov/sites/production/files/2020-10/19tstcar-2020-10-02.xlsx)   
+- [Air drag ocefficient (en.wikipedia.org)](https://en.wikipedia.org/wiki/Drag_coefficient)
+- [Speed formula (en.wikipedia.org)](https://en.wikipedia.org/wiki/Automobile_drag_coefficient)  
+- [Weight versus slope (pianetaciclismo.com)](http://www.pianetaciclismo.com/categoria/training/rapporto_peso_potenza/3.html)  
+![](slope.gif){height=400px}
 
-- Data source: https://www.epa.gov/sites/production/files/2020-10/19tstcar-2020-10-02.xlsx  
-- Drag coefficient: https://en.wikipedia.org/wiki/Automobile_drag_coefficient
+## Notes
+- Almost every graph and correlation is made by gasoline cars and FTP emission test cycle

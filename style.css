@@ -9,3 +9,5 @@ h1, h2 {
 li {
 	font-style: italic;
 }
+
+.reveal .slides > section > section { text-align:left; }
