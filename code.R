@@ -6,7 +6,7 @@ rethink = read_csv("rethink.csv") #read the database
 
 rethink = rethink %>% filter(Displ < 70 & MPG <100) #let's tide it up
 
-rethink = rethink %>% mutate(KML = MPG*0.425144, CO2bK = CO2*0.621371, Lb100 = 100/KML) # add CO2 grams per kilometer and liters used by 100km
+rethink = rethink %>% mutate(KML = MPG*0.425144, CO2bK = CO2*0.621371, Lb100 = 100/KML, KWeight = Weight*0.45359237) # add CO2 grams per kilometer and liters used by 100km
 
 View (rethink)
 
@@ -19,23 +19,6 @@ cor((rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$Lb
     (rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$CO2bK
     )
 
-ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline" )), aes(x = HP, y = Lb100)) +
-  geom_point(alpha = 0.2) +
-  geom_smooth(se=FALSE)
-
-ggplot((rethink %>% filter(Displ > 0.1 & Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline")), aes(x = Displ*Cylinders, y = HP)) +
-  geom_point(alpha = 0.2) +
-  geom_smooth(se=FALSE) #Good approx: HP = Displacement (Liters)* Cylinders * 10
-
-
-ggplot((rethink %>% filter(Displ > 0.1 & Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & HP/Displ < 120)), aes(x = Displ*Cylinders, y = HP)) +
-  geom_point(alpha = 0.2) +
-  geom_smooth(se=FALSE) #No turbo, function is apparently logarithmic
-
-ggplot((rethink %>% filter(Displ > 0.1 & Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & HP/Displ > 120)), aes(x = Displ*Cylinders, y = HP)) +
-  geom_point(alpha = 0.2) +
-  geom_smooth(se=FALSE) #Turbo only, function is initially logarithmic and after exponential (but just one)
-
 ggplot((rethink %>% filter (Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline"& Test == "FTP")), aes(x = HP, y = Lb100)) +
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE)
@@ -44,11 +27,7 @@ ggplot((rethink %>% filter(Cylinders > 0 & Lb100 > 0 & Fuel == "Tier 2 Cert Gaso
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE)
 
-ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = Weight, y = Lb100)) +
-  geom_point(alpha = 0.2) +
-  geom_smooth(se=FALSE)
-
-ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = Gears, y = Lb100)) +
+ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = KWeight, y = Lb100)) +
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE)
 
@@ -70,6 +49,21 @@ cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test ==
 ######################TESTS#####################
 
 
+ggplot((rethink %>% filter(Displ > 0.1 & Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline")), aes(x = Displ*Cylinders, y = HP)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(se=FALSE) #Good approx: HP = Displacement (Liters)* Cylinders * 10
+
+ggplot((rethink %>% filter(Displ > 0.1 & Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & HP/Displ < 120)), aes(x = Displ*Cylinders, y = HP)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(se=FALSE) #No turbo, function is apparently logarithmic
+
+ggplot((rethink %>% filter(Displ > 0.1 & Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & HP/Displ > 120)), aes(x = Displ*Cylinders, y = HP)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(se=FALSE) #Turbo only, function is initially logarithmic and after exponential (but just one)
+
+ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = Gears, y = Lb100)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(se=FALSE)
 
 ggplot((rethink %>% filter(Displ < 70 & Displ > 0.1 & Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & HP/Displ < 120)), aes(x = Displ*Cylinders, y = HP)) +
   geom_point(alpha = 0.2) +
