@@ -2,6 +2,7 @@ library(tidyverse)
 library(ggplot2)
 library(corrplot)
 library(modelr)
+library(ggthemes)
 rethink = read_csv("rethink.csv") #read the database
 
 rethink = rethink %>% filter(Displ < 70 & MPG <100) #let's tide it up
@@ -11,25 +12,33 @@ rethink = rethink %>% mutate(KML = MPG*0.425144, CO2bK = CO2*0.621371, Lb100 = 1
 View (rethink)
 
 ggplot(rethink %>% filter(Fuel == "Tier 2 Cert Gasoline"), aes(x = Lb100, y = CO2bK)) +
-  geom_point(alpha = 0.1) +
-  geom_smooth()
+  geom_point(alpha = 0.1 ) +
+  labs(y= "CO2 by kilometer (grams)", x = "Fuel consuption by 100 kilometers (liters)") +
+  geom_smooth() +
+  theme_stata()
 
 
 cor((rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$Lb100,
     (rethink %>% filter (MPG > 0 & CO2 > 0 & Fuel == "Tier 2 Cert Gasoline"))$CO2bK
     )
 
-ggplot((rethink %>% filter (Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline"& Test == "FTP")), aes(x = HP, y = Lb100)) +
-  geom_point(alpha = 0.2) +
-  geom_smooth(se=FALSE)
+ggplot((rethink %>% filter (Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = HP, y = Lb100)) +
+  geom_point(alpha = 0.1) +
+  geom_smooth(se=FALSE) +
+  labs(y= "Liters", x = "Horsepower") +
+  theme_economist()
 
 ggplot((rethink %>% filter(Cylinders > 0 & Lb100 > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = Cylinders, y = Lb100)) +
   geom_point(alpha = 0.2) +
-  geom_smooth(se=FALSE)
+  geom_smooth(se=FALSE) +
+  labs(y= "Liters", x = "Cylinders") +
+  theme_economist()
 
 ggplot((rethink %>% filter(Displ > 0.1 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP")), aes(x = KWeight, y = Lb100)) +
   geom_point(alpha = 0.2) +
-  geom_smooth(se=FALSE)
+  geom_smooth(se=FALSE) +
+  labs(y= "Liters", x = "Weight (kg)") +
+  theme_economist()
 
 cor((rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Cylinders,
     (rethink %>% filter(Cylinders > 0 & Fuel == "Tier 2 Cert Gasoline" & Test == "FTP"))$Lb100)
@@ -73,7 +82,6 @@ ggplot((rethink %>% filter(Displ < 70 & Displ > 0.1)), aes(x = HP, y = Displ)) +
   geom_point(alpha = 0.2) +
   geom_smooth(se=FALSE)
 
-##important
 ggplot((rethink %>% filter(Displ < 70 & Displ > 0.1 & Cylinders > 0 )), aes(x = HP, y = 1/MPG)) +
   geom_point(alpha = 0.15) +
   geom_smooth(se=FALSE)+
